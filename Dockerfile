@@ -1,6 +1,6 @@
 FROM docker.ngs.vbcf.ac.at/singularity-base as singularity
 
-FROM docker.ngs.vbcf.ac.at/flask-base:v1.1.1
+FROM docker.ngs.vbcf.ac.at/flask-base:v1.1.1-1-g89d661f
 
 RUN apt-get install gosu
 
