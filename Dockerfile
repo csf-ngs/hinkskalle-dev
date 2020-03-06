@@ -38,8 +38,6 @@ FROM docker.ngs.vbcf.ac.at/flask-base:v1.1.1-1-g89d661f
 
 RUN apt-get install gosu
 
-RUN pip install mongodb-migrations
-
 RUN useradd -d /srv/hinkskalle -m -s /bin/bash hinkskalle
 
 COPY --from=singularity-build /usr/local/bin/*singularity* /usr/local/bin/
