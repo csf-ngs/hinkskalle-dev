@@ -16,15 +16,13 @@ steps:
   - name: dockerauth
     path: /root/.docker
   commands:
-  - TAG=$(cat .tags)
   - >
     docker build
     --label org.label-schema.build-date="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
     --label org.label-schema.vcs-url="$DRONE_GIT_HTTP_URL"
     --label org.label-schema.vcs-ref="$DRONE_COMMIT_SHA"
     --label at.ac.vcf.ngs.blame="$DRONE_COMMIT_AUTHOR"
-    -t docker.ngs.vbcf.ac.at/hinkskalle-dev:$TAG .
-  - docker tag docker.ngs.vbcf.ac.at/hinkskalle-dev:$TAG docker.ngs.vbcf.ac.at/hinkskalle-dev:latest
+    -t docker.ngs.vbcf.ac.at/hinkskalle-dev .
 - name: pushraus
   image: docker:dind
   volumes:
@@ -33,6 +31,8 @@ steps:
   - name: dockerauth
     path: /root/.docker
   commands:
+  - TAG=$(cat .tags)
+  - docker tag docker.ngs.vbcf.ac.at/hinkskalle-dev docker.ngs.vbcf.ac.at/hinkskalle-dev:$TAG
   - docker push docker.ngs.vbcf.ac.at/hinkskalle-dev
   when:
     event:
