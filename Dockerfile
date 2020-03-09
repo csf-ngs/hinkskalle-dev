@@ -34,7 +34,7 @@ RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
   && cp singularity /usr/local/bin/singularity.dev 
 
 
-FROM docker.ngs.vbcf.ac.at/flask-base:v1.1.1-1-g89d661f
+FROM docker.ngs.vbcf.ac.at/flask-base:v1.1.2
 
 RUN apt-get install gosu
 
@@ -44,6 +44,8 @@ COPY --from=singularity-build /usr/local/bin/*singularity* /usr/local/bin/
 COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singularity/
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
+
+RUN pip3 install passlib
 
 WORKDIR /srv/hinkskalle/src
 CMD gosu hinkskalle /srv/hinkskalle/src/script/start.sh
