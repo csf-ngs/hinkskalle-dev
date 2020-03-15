@@ -45,7 +45,7 @@ COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singula
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
-RUN pip3 install passlib Flask-Migrate
+RUN pip3 install passlib Flask-Migrate ldap3
 
 WORKDIR /srv/hinkskalle/src
 CMD gosu hinkskalle /srv/hinkskalle/src/script/start.sh
