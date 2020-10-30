@@ -51,7 +51,7 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get update \
   && apt-get install -y nodejs
 
-RUN npm install -g @vue/cli
+RUN npm install -g @vue/cli yarn
 
 WORKDIR /srv/hinkskalle/src
 CMD gosu hinkskalle /srv/hinkskalle/src/script/start.sh
