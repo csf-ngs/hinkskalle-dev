@@ -18,7 +18,7 @@ RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && git clone https://github.com/sylabs/singularity.git \
   && cd singularity \
   && git fetch --all \
-  && git checkout v3.5.2 \
+  && git checkout v3.6.2 \
   && ./mconfig \
   && cd ./builddir \
   && make \
@@ -46,6 +46,12 @@ COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
 RUN pip3 install passlib Flask-Migrate ldap3
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+  && apt-get update \
+  && apt-get install -y nodejs
+
+RUN npm install -g @vue/cli
 
 WORKDIR /srv/hinkskalle/src
 CMD gosu hinkskalle /srv/hinkskalle/src/script/start.sh
