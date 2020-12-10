@@ -11,8 +11,6 @@ RUN apt-get update \
     cryptsetup \
     git 
 
-COPY share/singularity-plain-http.patch /tmp/
-
 RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && cd ${GOPATH}/src/github.com/sylabs \
   && git clone https://github.com/sylabs/singularity.git \
@@ -25,6 +23,8 @@ RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && make install \
   && mv /usr/local/etc/singularity/singularity.conf /usr/local/etc/singularity/singularity.conf.bak \
   && sed -e 's/mount hostfs = no/mount hostfs = yes/' /usr/local/etc/singularity/singularity.conf.bak > /usr/local/etc/singularity/singularity.conf 
+
+COPY share/singularity-plain-http.patch /tmp/
 
 RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
   && patch -p1 < /tmp/singularity-plain-http.patch \
