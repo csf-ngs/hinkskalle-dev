@@ -18,7 +18,7 @@ RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && git clone https://github.com/sylabs/singularity.git \
   && cd singularity \
   && git fetch --all \
-  && git checkout v3.6.2 \
+  && git checkout v3.7.0 \
   && ./mconfig \
   && cd ./builddir \
   && make \
@@ -45,7 +45,7 @@ COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singula
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
-RUN pip3 install passlib Flask-Migrate ldap3
+RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get update \
