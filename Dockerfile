@@ -34,7 +34,7 @@ RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
   && cp singularity /usr/local/bin/singularity.dev 
 
 
-FROM docker.ngs.vbcf.ac.at/flask-base:v2.0.0
+FROM docker.ngs.vbcf.ac.at/flask-base:v3.0.0
 
 RUN apt-get install gosu
 
