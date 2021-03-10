@@ -57,3 +57,4 @@ WORKDIR /srv/hinkskalle/src
 CMD gosu hinkskalle /srv/hinkskalle/src/script/start-dev.sh
 
 EXPOSE 5000
+LABEL org.opencontainers.image.source https://github.com/csf-ngs/hinkskalle-dev
