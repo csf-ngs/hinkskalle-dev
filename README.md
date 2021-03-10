@@ -6,6 +6,7 @@ Complete development environment for Hinkskalle, including:
 
 - python
 - flask
-- mongodb
+- node.js + vue-cli
+- singularity
 
 This container is meant to be run in the root of the Hinkskalle repo.
