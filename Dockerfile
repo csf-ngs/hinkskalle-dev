@@ -47,7 +47,7 @@ COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singula
 
 RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get update \
   && apt-get install -y nodejs
 
