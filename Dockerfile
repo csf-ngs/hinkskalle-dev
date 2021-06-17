@@ -16,7 +16,7 @@ RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && git clone https://github.com/sylabs/singularity.git \
   && cd singularity \
   && git fetch --all \
-  && git checkout v3.7.0 \
+  && git checkout v3.8.0 \
   && ./mconfig \
   && cd ./builddir \
   && make \
@@ -24,11 +24,11 @@ RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && mv /usr/local/etc/singularity/singularity.conf /usr/local/etc/singularity/singularity.conf.bak \
   && sed -e 's/mount hostfs = no/mount hostfs = yes/' /usr/local/etc/singularity/singularity.conf.bak > /usr/local/etc/singularity/singularity.conf 
 
-COPY share/singularity-plain-http.patch /tmp/
+COPY share/*-plain-http.patch /tmp/
 
 RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
   && patch -p1 < /tmp/singularity-plain-http.patch \
-  && ./mconfig \
+  && patch -p1 < /tmp/oras-plain-http.patch \
   && cd ./builddir \
   && make \
   && cp singularity /usr/local/bin/singularity.dev 
@@ -45,7 +45,7 @@ COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singula
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
-RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis
+RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis pyjwt
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get update \
