@@ -45,7 +45,7 @@ COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singula
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
-RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis pyjwt
+RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis pyjwt humanize
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get update \
