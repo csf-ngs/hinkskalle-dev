@@ -34,9 +34,41 @@ RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
   && cp singularity /usr/local/bin/singularity.dev 
 
 
-FROM docker.ngs.vbcf.ac.at/flask-base:v3.1.1
+FROM ubuntu:20.04
 
-RUN apt-get install gosu
+ENV TZ=Europe/Vienna
+
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y --no-install-recommends bash curl locales gosu ca-certificates tzdata \
+  && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+  && sed -i -e 's/# \(en_US\.UTF-8 .*\)/\1/' /etc/locale.gen \
+  && locale-gen
+
+ENV LC_ALL en_US.UTF-8
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+      python3 python3-pip python3-dev python3-setuptools python3-distutils \
+  && pip3 install --upgrade pip
+
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && apt-get install --no-install-recommends -y gnupg2 \
+  && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends postgresql-client libpq-dev \
+  && apt-get autoremove -y gnupg2
+
+RUN pip3 install 'werkzeug>=1.0.0' 'flask>=1.1.1' SimpleJSON Flask-Session flask-rebar==v1.10.2 'flask_wtf>=0.14.3' python-dotenv \
+  && pip3 install requests python-dateutil python-slugify PyYAML \
+  && pip3 install gunicorn \
+  && pip3 uninstall -y enum34 \
+  && pip3 install Flask-SQLAlchemy Flask-Migrate \
+  && apt-get install -y gcc \
+  && pip3 install psycopg2 \
+  && apt-get autoremove -y gcc \
+  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] \
+  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize
 
 RUN useradd -d /srv/hinkskalle -m -s /bin/bash hinkskalle
 
@@ -45,9 +77,7 @@ COPY --from=singularity-build /usr/local/etc/singularity/ /usr/local/etc/singula
 COPY --from=singularity-build /usr/local/libexec/singularity/ /usr/local/libexec/singularity/
 COPY --from=singularity-build /usr/local/var/singularity/ /usr/local/var/singularity/
 
-RUN pip3 install passlib Flask-Migrate ldap3 Flask-RQ2 fakeredis pyjwt humanize
-
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get update \
   && apt-get install -y nodejs
 
