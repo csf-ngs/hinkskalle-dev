@@ -59,16 +59,16 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/ap
   && apt-get install -y --no-install-recommends postgresql-client libpq-dev \
   && apt-get autoremove -y gnupg2
 
-RUN pip3 install 'werkzeug>=1.0.0' 'flask>=1.1.1' SimpleJSON Flask-Session flask-rebar==v1.10.2 'flask_wtf>=0.14.3' python-dotenv \
-  && pip3 install requests python-dateutil python-slugify PyYAML \
+RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask-rebar>=v2.0.0 'flask_wtf>=1.0.0' python-dotenv \
+  && pip3 install requests PyYAML \
   && pip3 install gunicorn \
   && pip3 uninstall -y enum34 \
   && pip3 install Flask-SQLAlchemy Flask-Migrate \
   && apt-get install -y gcc \
   && pip3 install psycopg2 \
   && apt-get autoremove -y gcc \
-  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] \
-  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize
+  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis \
+  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize 
 
 RUN useradd -d /srv/hinkskalle -m -s /bin/bash hinkskalle
 
