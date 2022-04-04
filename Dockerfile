@@ -49,7 +49,7 @@ ENV LC_ALL en_US.UTF-8
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-      python3 python3-pip python3-dev python3-setuptools python3-distutils \
+      python3 python3-pip python3-dev python3-setuptools python3-distutils git \
   && pip3 install --upgrade pip
 
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
@@ -59,7 +59,9 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/ap
   && apt-get install -y --no-install-recommends postgresql-client libpq-dev \
   && apt-get autoremove -y gnupg2
 
-RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask-rebar>=v2.0.0 'flask_wtf>=1.0.0' python-dotenv \
+#RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask-rebar>=v2.0.0 'flask_wtf>=1.0.0' python-dotenv \
+RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session 'flask_wtf>=1.0.0' python-dotenv \
+  && pip3 install git+https://github.com/h3kker/flask-rebar#egg=flask-rebar \
   && pip3 install requests PyYAML \
   && pip3 install gunicorn \
   && pip3 uninstall -y enum34 \
@@ -68,7 +70,8 @@ RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask
   && pip3 install psycopg2 \
   && apt-get autoremove -y gcc \
   && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis \
-  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize 
+  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize
+
 
 RUN useradd -d /srv/hinkskalle -m -s /bin/bash hinkskalle
 
