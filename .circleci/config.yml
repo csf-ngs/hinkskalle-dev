@@ -23,12 +23,12 @@ jobs:
       - run:
           name: Save Docker image layer cache
           command: |
-            mkdir -p /home/ubuntu/caches
-            docker save -o /home/ubuntu/caches/app.tar app
+            mkdir -p /tmp/caches
+            docker save -o /tmp/caches/app.tar app
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - /home/ubuntu/caches/app.tar
+            - /tmp/caches/app.tar
       - when:
           condition: << pipeline.git.tag >>
           steps:
