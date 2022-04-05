@@ -23,23 +23,6 @@ steps:
     --label org.label-schema.vcs-ref="$DRONE_COMMIT_SHA"
     --label at.ac.vcf.ngs.blame="$DRONE_COMMIT_AUTHOR"
     -t docker.ngs.vbcf.ac.at/hinkskalle-dev .
-- name: pushraus
-  image: docker:dind
-  volumes:
-  - name: dockersock
-    path: /var/run/docker.sock
-  - name: dockerauth
-    path: /root/.docker/config.json
-  commands:
-  - TAG=$(cat .tags)
-  - docker tag docker.ngs.vbcf.ac.at/hinkskalle-dev docker.ngs.vbcf.ac.at/hinkskalle-dev:$TAG
-  - docker push docker.ngs.vbcf.ac.at/hinkskalle-dev
-  - docker push docker.ngs.vbcf.ac.at/hinkskalle-dev:$TAG
-  - docker tag docker.ngs.vbcf.ac.at/hinkskalle-dev ghcr.io/csf-ngs/hinkskalle-dev:$TAG
-  - docker push ghcr.io/csf-ngs/hinkskalle-dev:$TAG
-  when:
-    event:
-      - tag
 volumes:
 - name: dockersock
   host:
