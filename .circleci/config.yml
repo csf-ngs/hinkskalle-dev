@@ -24,7 +24,7 @@ jobs:
           name: Save Docker image layer cache
           command: |
             mkdir -p /tmp/caches
-            docker save -o /tmp/caches/app.tar app
+            docker save -o /tmp/caches/app.tar ghcr.io/csf-ngs/hinkskalle-dev
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
