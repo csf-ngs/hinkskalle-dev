@@ -42,3 +42,11 @@ jobs:
                   echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin ghcr.io
                   docker push ghcr.io/csf-ngs/hinkskalle-dev:<< pipeline.git.tag >>
                   docker push ghcr.io/csf-ngs/hinkskalle-dev
+workflows:
+  version: 2
+  alles-raus:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /v.*/
