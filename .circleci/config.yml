@@ -38,7 +38,7 @@ jobs:
                   docker tag ghcr.io/csf-ngs/hinkskalle-dev ghcr.io/csf-ngs/hinkskalle-dev:<< pipeline.git.tag >>
             - run:
                 name: pushraus
-                command:
+                command: |
                   echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin ghcr.io
                   docker push ghcr.io/csf-ngs/hinkskalle-dev:<< pipeline.git.tag >>
                   docker push ghcr.io/csf-ngs/hinkskalle-dev
