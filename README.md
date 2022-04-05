@@ -1,5 +1,7 @@
 # hinkskalle-dev
 
+[![CircleCI](https://circleci.com/gh/csf-ngs/hinkskalle-dev/tree/master.svg?style=svg)](https://circleci.com/gh/csf-ngs/hinkskalle-dev/tree/master)
+
 dev + test container for Hinkskalle
 
 Complete development environment for Hinkskalle, including:
