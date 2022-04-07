@@ -13,8 +13,6 @@ steps:
   volumes:
   - name: dockersock
     path: /var/run/docker.sock
-  - name: dockerauth
-    path: /root/.docker/config.json
   commands:
   - >
     docker build
@@ -22,11 +20,21 @@ steps:
     --label org.label-schema.vcs-url="$DRONE_GIT_HTTP_URL"
     --label org.label-schema.vcs-ref="$DRONE_COMMIT_SHA"
     --label at.ac.vcf.ngs.blame="$DRONE_COMMIT_AUTHOR"
-    -t docker.ngs.vbcf.ac.at/hinkskalle-dev .
+    -t ghcr.io/csf-ngs/hinkskalle-dev .
+- name: pushraus
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+  - TAG=$(cat .tags)
+  - docker tag ghcr.io/csf-ngs/hinkskalle-dev ghcr.io/csf-ngs/hinkskalle-dev:$TAG
+  - docker push ghcr.io/csf-ngs/hinkskalle-dev
+  - docker push ghcr.io/csf-ngs/hinkskalle-dev:$TAG
+  when:
+    event:
+      - tag
 volumes:
 - name: dockersock
   host:
     path: /var/run/docker.sock
-- name: dockerauth
-  host:
-    path: /home/docker/drone/docker-config.json
