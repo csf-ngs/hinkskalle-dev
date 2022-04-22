@@ -23,12 +23,20 @@ steps:
     -t ghcr.io/csf-ngs/hinkskalle-dev .
 - name: pushraus
   image: docker:dind
+  depends_on:
+  - bauhaus
   volumes:
   - name: dockersock
     path: /var/run/docker.sock
+  environment:
+    DOCKER_PASS:
+      from_secret: ghcr
+    DOCKER_USERNAME:
+      from_secret: ghcr-username
   commands:
   - TAG=$(cat .tags)
   - docker tag ghcr.io/csf-ngs/hinkskalle-dev ghcr.io/csf-ngs/hinkskalle-dev:$TAG
+  - echo "$DOCKER_PASS" | docker login --username $DOCKER_USERNAME --password-stdin ghcr.io
   - docker push ghcr.io/csf-ngs/hinkskalle-dev
   - docker push ghcr.io/csf-ngs/hinkskalle-dev:$TAG
   when:
