@@ -25,6 +25,7 @@ steps:
   image: docker:dind
   depends_on:
   - bauhaus
+  - fetch
   volumes:
   - name: dockersock
     path: /var/run/docker.sock
