@@ -1,6 +1,6 @@
 # hinkskalle-dev
 
-[![CircleCI](https://circleci.com/gh/csf-ngs/hinkskalle-dev/tree/master.svg?style=svg)](https://circleci.com/gh/csf-ngs/hinkskalle-dev/tree/master)
+[![Build Status](https://knecht.testha.se/api/badges/csf-ngs/hinkskalle-dev/status.svg)](https://knecht.testha.se/csf-ngs/hinkskalle-dev)
 
 dev + test container for Hinkskalle
 
