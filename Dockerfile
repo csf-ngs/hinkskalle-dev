@@ -60,8 +60,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/ap
   && apt-get autoremove -y gnupg2
 
 #RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask-rebar>=v2.0.0 'flask_wtf>=1.0.0' python-dotenv \
-RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session 'flask_wtf>=1.0.0' python-dotenv \
-  && pip3 install git+https://github.com/h3kker/flask-rebar#egg=flask-rebar \
+RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session 'flask_wtf>=1.0.0' python-dotenv 'flask-rebar>=2.2.1' \
   && pip3 install requests PyYAML \
   && pip3 install gunicorn \
   && pip3 uninstall -y enum34 \
