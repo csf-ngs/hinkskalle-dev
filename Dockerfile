@@ -60,7 +60,9 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/ap
   && apt-get autoremove -y gnupg2
 
 #RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session flask-rebar>=v2.0.0 'flask_wtf>=1.0.0' python-dotenv \
-RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session 'flask_wtf>=1.0.0' python-dotenv 'flask-rebar>=2.2.1' \
+# pin werkzeug to 2.1.2, the routing state machine in 2.2.0 does not play nice with
+# the oras name converter
+RUN pip3 install 'werkzeug>=2.1.2' 'flask>=2.0.0' SimpleJSON Flask-Session 'flask_wtf>=1.0.0' python-dotenv 'flask-rebar>=2.2.1' \
   && pip3 install requests PyYAML \
   && pip3 install gunicorn \
   && pip3 uninstall -y enum34 \
