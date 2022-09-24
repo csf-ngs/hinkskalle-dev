@@ -69,7 +69,7 @@ RUN pip3 install 'werkzeug>=2.0.0' 'flask>=2.0.0' SimpleJSON Flask-Session 'flas
   && pip3 install psycopg2 \
   && apt-get autoremove -y gcc \
   && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis \
-  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize python-slugify
+  && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize python-slugify cryptography
 
 
 RUN useradd -d /srv/hinkskalle -m -s /bin/bash hinkskalle
