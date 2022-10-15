@@ -1,4 +1,4 @@
-FROM golang:1.13 as singularity-build
+FROM golang:1.19 as singularity-build
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -9,30 +9,22 @@ RUN apt-get update \
     pkg-config \
     squashfs-tools \
     cryptsetup \
-    git 
+    git \
+    libglib2.0-dev \
+    runc
 
 RUN mkdir -p ${GOPATH}/src/github.com/sylabs \
   && cd ${GOPATH}/src/github.com/sylabs \
-  && git clone https://github.com/sylabs/singularity.git \
+  && git clone --recursive https://github.com/sylabs/singularity.git \
   && cd singularity \
   && git fetch --all \
-  && git checkout v3.8.0 \
+  && git checkout v3.10.3 \
   && ./mconfig \
   && cd ./builddir \
   && make \
   && make install \
   && mv /usr/local/etc/singularity/singularity.conf /usr/local/etc/singularity/singularity.conf.bak \
-  && sed -e 's/mount hostfs = no/mount hostfs = yes/' /usr/local/etc/singularity/singularity.conf.bak > /usr/local/etc/singularity/singularity.conf 
-
-COPY share/*-plain-http.patch /tmp/
-
-RUN cd ${GOPATH}/src/github.com/sylabs/singularity \
-  && patch -p1 < /tmp/singularity-plain-http.patch \
-  && patch -p1 < /tmp/oras-plain-http.patch \
-  && cd ./builddir \
-  && make \
-  && cp singularity /usr/local/bin/singularity.dev 
-
+  && sed -e 's/mount hostfs = no/mount hostfs = yes/' /usr/local/etc/singularity/singularity.conf.bak > /usr/local/etc/singularity/singularity.conf
 
 FROM ubuntu:20.04
 
@@ -70,7 +62,7 @@ RUN pip3 install 'werkzeug>=2.1.2' 'flask>=2.0.0' SimpleJSON Flask-Session 'flas
   && apt-get install -y gcc \
   && pip3 install psycopg2 \
   && apt-get autoremove -y gcc \
-  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis \
+  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis flake8 black \
   && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize python-slugify cryptography webauthn
 
 
