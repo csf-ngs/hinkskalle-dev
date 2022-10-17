@@ -62,7 +62,7 @@ RUN pip3 install 'werkzeug>=2.1.2' 'flask>=2.0.0' SimpleJSON Flask-Session 'flas
   && apt-get install -y gcc \
   && pip3 install psycopg2 \
   && apt-get autoremove -y gcc \
-  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis flake8 black \
+  && pip3 install nose2 nose2-html-report nose2\[coverage_plugin\] fakeredis flake8 black flake8-bugbear \
   && pip3 install passlib ldap3 Flask-RQ2 fakeredis pyjwt humanize python-slugify cryptography webauthn
 
 
